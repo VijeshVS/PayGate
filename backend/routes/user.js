@@ -6,7 +6,7 @@ const {JWT_SECRET} = require('../config')
 
 const UserValid = z.object({
     username : z.string(),
-    email : z.email(),
+    email : z.string().email(),
     firstName : z.string(),
     lastName: z.string(),
     password: z.string().min(6)
@@ -48,7 +48,6 @@ userRouter.post('/signup',async (req,res)=>{
     })
     
 })
-
 
 userRouter.post('/signin',async (req,res)=>{
     const username = req.body.username;
