@@ -3,6 +3,7 @@ const {User} = require('../db')
 const z = require('zod')
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../config')
+const {authMiddleware} = require('../middleware')
 
 const UserValid = z.object({
     username : z.string(),
@@ -77,6 +78,48 @@ userRouter.post('/signin',async (req,res)=>{
         token
     })
 
+})
+
+const updaterValid = z.object({
+    firstName: z.string(),
+    lastName: z.string(),
+    password: z.string().min(6)
+})
+
+userRouter.put('/', authMiddleware, async (req,res)=>{
+    const password = req.body.password;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+
+    const obj = {firstName,lastName,password}
+
+    const response = updaterValid.safeParse(obj);
+
+    if(!response.success){
+        return res.status(411).json({
+            message : 'Error while updating information'
+        })
+    }
+
+    const filters = {}
+
+    if(password){
+        filters['password'] = password
+    }
+    if(firstName){
+        filters['firstName'] = firstName
+    }
+    if(lastName){
+        filters['lastName'] = lastName
+    }
+
+    const userId = req.headers.userId;
+
+    await User.findOneAndUpdate({_id:userId},{password,firstName,lastName})
+
+    res.status(200).json({
+        message: "Updated successfully"
+    })
 })
 
 module.exports = {
