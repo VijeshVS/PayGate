@@ -4,6 +4,7 @@ const z = require('zod')
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../config')
 const {authMiddleware} = require('../middleware')
+const mongoose = require('mongoose')
 
 const UserValid = z.object({
     username : z.string(),
@@ -19,13 +20,11 @@ userRouter.post('/signup',async (req,res)=>{
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const password = req.body.password;
-
     const obj = {username,email,firstName,lastName,password}
-
     const response = UserValid.safeParse(obj)
 
     const foundUser = await User.findOne({
-        $or : [
+        '$or' : [
             {username},
             {email}
         ]
@@ -38,9 +37,7 @@ userRouter.post('/signup',async (req,res)=>{
     }
 
     const userCreated = await User.create(obj);
-
     const userId = userCreated._id;
-
     const token = jwt.sign({userId},JWT_SECRET)
 
     res.status(200).json({
@@ -71,7 +68,6 @@ userRouter.post('/signin',async (req,res)=>{
     }
 
     const userId = foundUser._id;
-
     const token = jwt.sign({userId},JWT_SECRET)
 
     res.status(200).json({
@@ -86,13 +82,11 @@ const updaterValid = z.object({
     password: z.string().min(6)
 })
 
-userRouter.put('/', authMiddleware, async (req,res)=>{
+userRouter.put('/', authMiddleware , async (req,res)=>{
     const password = req.body.password;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
-
     const obj = {firstName,lastName,password}
-
     const response = updaterValid.safeParse(obj);
 
     if(!response.success){
@@ -115,12 +109,30 @@ userRouter.put('/', authMiddleware, async (req,res)=>{
 
     const userId = req.headers.userId;
 
-    await User.findOneAndUpdate({_id:userId},{password,firstName,lastName})
+    await User.findOneAndUpdate({_id:userId},filters)
 
     res.status(200).json({
         message: "Updated successfully"
     })
 })
+
+userRouter.get('/bulk', authMiddleware ,async (req,res)=>{
+    const filter = req.query.filter;
+    const filteredUsers = await User.find({
+        '$or':[{firstName:filter},{lastName:filter}]
+    })
+    const list = []
+    filteredUsers.map((e)=>{
+        list.push({
+            firstName:e.firstName,
+            lastName:e.lastName,
+            _id: e._id
+        })
+    })
+
+    res.status(200).json({users: list})
+})
+
 
 module.exports = {
     userRouter
