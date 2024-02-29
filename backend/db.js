@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
+const dbURL = require('./config')
 
-mongoose.connect('');
+mongoose.connect(dbURL);
 
 
 const UserSchema = new Schema({
