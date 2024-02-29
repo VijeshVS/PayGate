@@ -1,5 +1,5 @@
 const JWT_SECRET = 'jwt123'
-const dbURL = ''
+const dbURL = 'dadd'
 
 module.exports = {
     JWT_SECRET,
