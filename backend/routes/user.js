@@ -1,5 +1,5 @@
 const userRouter = require('express').Router()
-const {User} = require('../db')
+const {User,Accounts} = require('../db')
 const z = require('zod')
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../config')
@@ -29,6 +29,8 @@ userRouter.post('/signup',async (req,res)=>{
         ]
     })
 
+    
+
     if( foundUser || !response.success){
         return res.status(411).json({
             msg : "Email/Username already taken or incorrect input"
@@ -38,6 +40,8 @@ userRouter.post('/signup',async (req,res)=>{
     const userCreated = await User.create(obj);
     const userId = userCreated._id;
     const token = jwt.sign({userId},JWT_SECRET)
+
+    await Accounts.findByIdAndUpdate({userId},{balance: Math.floor(Math.random()*10000)})
 
     res.status(200).json({
         message : "User created successfully",

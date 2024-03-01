@@ -13,6 +13,12 @@ const UserSchema = new Schema({
     lastName: String
 })
 
-const User = mongoose.model('User',UserSchema)
+const AccountsSchema = new Schema({
+    userId: { type: Schema.Types.ObjectId, ref:"User"} ,
+    balance: Number
+})
 
-module.exports = {User}
+const User = mongoose.model('User',UserSchema)
+const Accounts = mongoose.model('Accounts', AccountsSchema)
+
+module.exports = {User,Accounts}
