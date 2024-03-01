@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken')
-const JWT_SECRET = require('./config')
+const {JWT_SECRET} = require('./config')
 
 function authMiddleware(req,res,next){
 
     const tokenString = req.headers.authorization;
-    const token = tokenString.split(' ')[1]
+    let token = tokenString.split(' ')[1]
 
     try{
         jwt.verify(token,JWT_SECRET);

@@ -4,7 +4,6 @@ const z = require('zod')
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../config')
 const {authMiddleware} = require('../middleware')
-const mongoose = require('mongoose')
 
 const UserValid = z.object({
     username : z.string(),
@@ -76,20 +75,20 @@ userRouter.post('/signin',async (req,res)=>{
 
 })
 
-const updaterValid = z.object({
-    firstName: z.string(),
-    lastName: z.string(),
-    password: z.string().min(6)
-})
+const updateFirstName = z.string();
+const updateLastName = z.string();
+const updatePassword = z.string().min(6);
 
 userRouter.put('/', authMiddleware , async (req,res)=>{
     const password = req.body.password;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
-    const obj = {firstName,lastName,password}
-    const response = updaterValid.safeParse(obj);
+    
+    const response1 = firstName?updateFirstName.safeParse(firstName):{success:true};
+    const response2 = lastName?updateLastName.safeParse(lastName):{success:true};
+    const response3 = password?updatePassword.safeParse(password):{success:true};
 
-    if(!response.success){
+    if(!response1.success || !response2.success || !response3.success){
         return res.status(411).json({
             message : 'Error while updating information'
         })
