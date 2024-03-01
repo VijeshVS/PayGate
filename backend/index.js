@@ -11,7 +11,7 @@ app.use(cors())
 app.use(express.json()) 
 app.use('/api/v1',apiRouter)
 app.use('/api/v1/user',userRouter)
-app.use('/ap1/v1/account',accountRouter)
+app.use('/api/v1/account',accountRouter)
 
 
 

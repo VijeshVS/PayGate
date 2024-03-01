@@ -1,7 +1,8 @@
 const accountRouter = require('express').Router()
-const {Accounts} = require('../db')
+const {Accounts} = require('../db');
+const { authMiddleware } = require('../middleware');
 
-accountRouter.get('/balance',async (req,res)=>{
+accountRouter.get('/balance',authMiddleware,async (req,res)=>{
     const userId = req.headers.userId;
 
     const balanceObj = await Accounts.findOne({userId})
@@ -12,7 +13,7 @@ accountRouter.get('/balance',async (req,res)=>{
 
 })
 
-accountRouter.post('/transfer',async(req,res)=>{
+accountRouter.post('/transfer',authMiddleware,async(req,res)=>{
     const myUserId = req.headers.userId;
 
     const toUserId = req.body.to;
@@ -34,13 +35,14 @@ accountRouter.post('/transfer',async(req,res)=>{
         })
     }
 
-    Accounts.updateOne({userId:myUserId},{
-        '$inc' : {
+    await Accounts.updateOne({userId:myUserId},{
+        $inc: {
             balance: -amount
         }
     })
-    Accounts.updateOne({userId:toUserId},{
-        '$inc' : {
+
+    await Accounts.updateOne({userId:toUserId},{
+        $inc : {
             balance : amount
         }
     })

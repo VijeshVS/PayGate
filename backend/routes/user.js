@@ -41,7 +41,7 @@ userRouter.post('/signup',async (req,res)=>{
     const userId = userCreated._id;
     const token = jwt.sign({userId},JWT_SECRET)
 
-    await Accounts.findByIdAndUpdate({userId},{balance: Math.floor(Math.random()*10000)})
+    await Accounts.create({userId,balance: Math.floor(Math.random()*10000)})
 
     res.status(200).json({
         message : "User created successfully",
