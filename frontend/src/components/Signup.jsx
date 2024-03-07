@@ -33,7 +33,7 @@ export const Signup = ()=>{
             email : email 
           })
 
-          localStorage.setItem('token',response.token)
+          localStorage.setItem('token',"Bearer " +response.token)
           notify("User registered successfully",'s');
           navigate('/dashboard')
 
