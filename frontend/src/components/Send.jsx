@@ -5,13 +5,13 @@ import axios from 'axios';
 
 const url = "http://localhost:3000/api/v1/account/transfer"
 
-export const Send = ({user})=>{
+export const Send = ({user,setBalance})=>{
   const [openModal, setOpenModal] = useState(false);
   const [amt,setAmt] = useState();
 
     const transfer = async ()=>{
         try{
-            const response = await axios.post(url,{
+            await axios.post(url,{
                 to: user._id,
                 amount:amt
             },{
@@ -19,8 +19,9 @@ export const Send = ({user})=>{
                     Authorization : localStorage.getItem('token')
                 }
             })
-          
+            
             notify(`Transfered Rs.${amt} to ${user.firstName} successfully!!`,'s')
+            setBalance(c => c-amt)
     }
     catch(e){
         notify("Insufficient balance!!",'d')
@@ -45,8 +46,12 @@ export const Send = ({user})=>{
                 transfer();
             }
             setOpenModal(false)
+            setAmt(0);
         }}>Initiate transfer</Button>
-          <Button color="gray" onClick={() => setOpenModal(false)}>
+          <Button color="gray" onClick={() =>  {
+            setOpenModal(false)
+            setAmt(0);
+            }}>
             Cancel
           </Button>
         </Modal.Footer>

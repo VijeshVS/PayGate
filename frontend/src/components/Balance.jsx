@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 const url = 'http://localhost:3000/api/v1/account/balance';
 
-export const Balance = () => {
+export const Balance = ({balance,setBalance}) => {
     const navigate = useNavigate();
-    const [balance, setBalance] = useState(0);
+    
 
     const bal = async () => {
         try {

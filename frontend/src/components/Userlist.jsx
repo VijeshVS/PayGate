@@ -4,7 +4,7 @@ import { Send } from "./Send";
 
 const url = 'http://localhost:3000/api/v1/user/bulk'
 
-export const Userlist = ()=>{
+export const Userlist = ({setBalance})=>{
     const [users,setUsers] = useState([]);
     const [filter,setFilter] = useState("")
 
@@ -37,7 +37,7 @@ export const Userlist = ()=>{
             {users.map((user)=>{
                 return <div className="flex justify-between px-1 py-3">
                     <h1 className="text-lg font-bold">{user.firstName} {user.lastName}</h1>
-                    <Send user={user} />
+                    <Send user={user} setBalance = {setBalance} />
                 </div>
             })}
         </div>
