@@ -14,7 +14,7 @@ function authMiddleware(req,res,next){
             msg : "User is not authorized"
         })
     }  
-    //hello
+
     const userIdObj = jwt.decode(token);
     userId = userIdObj.userId; 
 

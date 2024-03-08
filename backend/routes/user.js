@@ -121,16 +121,25 @@ userRouter.put('/', authMiddleware , async (req,res)=>{
 
 userRouter.get('/bulk', authMiddleware ,async (req,res)=>{
     const filter = req.query.filter;
+
+    const rgx = (pattern) => new RegExp(`.*${pattern}.*`);
+    const searchRgx = rgx(filter);
+
     const filteredUsers = await User.find({
-        '$or':[{firstName:filter},{lastName:filter}]
+        '$or':[
+            {firstName:{$regex:searchRgx,$options:"i"}},
+            {lastName:{$regex:searchRgx,$options:"i"}}
+        ]
     })
+
     const list = []
     filteredUsers.map((e)=>{
-        list.push({
-            firstName:e.firstName,
-            lastName:e.lastName,
-            _id: e._id
-        })
+        if(e._id != req.headers.userId)
+            list.push({
+                firstName:e.firstName,
+                lastName:e.lastName,
+                _id: e._id
+            })
     })
 
     res.status(200).json({users: list})
