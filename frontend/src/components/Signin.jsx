@@ -19,13 +19,11 @@ export const Signin = ()=>{
                 username : user,
                 password: pass
             })
-
             localStorage.setItem('token',"Bearer "+response.data.token)
             notify("User logged in successfully!!",'s')
             navigate('/dashboard')
         }
         catch(e){
-            console.log(e)
             notify("Error while logging in !!",'d')
         }
     }

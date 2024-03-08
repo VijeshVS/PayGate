@@ -1,0 +1,57 @@
+import { Button, Modal } from 'flowbite-react';
+import { useState } from 'react';
+import { notify } from '../utils/notify';
+import axios from 'axios';
+
+const url = "http://localhost:3000/api/v1/account/transfer"
+
+export const Send = ({user})=>{
+  const [openModal, setOpenModal] = useState(false);
+  const [amt,setAmt] = useState();
+
+    const transfer = async ()=>{
+        try{
+            const response = await axios.post(url,{
+                to: user._id,
+                amount:amt
+            },{
+                headers:{
+                    Authorization : localStorage.getItem('token')
+                }
+            })
+          
+            notify(`Transfered Rs.${amt} to ${user.firstName} successfully!!`,'s')
+    }
+    catch(e){
+        notify("Insufficient balance!!",'d')
+    }
+    }
+    
+  return (
+    <>
+    <button onClick={() => setOpenModal(true)} className="font-medium text-md bg-black text-white p-2 rounded-xl">Send Money</button>
+      <Modal show={openModal} onClose={() => setOpenModal(false)}>
+        <Modal.Header>Send Money</Modal.Header>
+        <Modal.Body>
+          <div className="space-y-6">
+            <h1 className='text-2xl font-bold'>{user.firstName} {user.lastName}</h1>
+            <h1 className='text-lg font-bold'>Amount (in Rs.)</h1>
+            <input value={amt} onChange={(e)=>setAmt(e.target.value)} type="text" placeholder='Enter the amount' className='w-full h-10 rounded-xl border-2 border-gray-400' />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => {
+            if(amt){
+                transfer();
+            }
+            setOpenModal(false)
+        }}>Initiate transfer</Button>
+          <Button color="gray" onClick={() => setOpenModal(false)}>
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+
+}

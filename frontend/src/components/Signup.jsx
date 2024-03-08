@@ -33,16 +33,21 @@ export const Signup = ()=>{
             email : email 
           })
 
-          localStorage.setItem('token',"Bearer " +response.token)
+          localStorage.setItem('token',"Bearer " + response.data.token )
           notify("User registered successfully",'s');
           navigate('/dashboard')
 
         }
         catch(e){
-            const status = e.response.status;
-
-            if(status == 411){
-                notify("User/email already exists or incorrect inputs",'d');
+            if(e.response){
+                const status = e.response.status;
+                
+                if(status == 411){
+                    notify("User/email already exists or incorrect inputs",'d');
+                }
+                else{
+                    notify("Error while signing up!!",'d');
+                }
             }
             else{
                 notify("Error while signing up!!",'d');
