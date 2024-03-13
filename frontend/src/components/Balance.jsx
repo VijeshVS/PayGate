@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import { notify } from '../utils/notify';
 import { useNavigate } from 'react-router-dom';
-import { backendUrl } from '/'
 
+const backendUrl = process.env.backendUrl
 const url = backendUrl + '/account/balance'
 
 export const Balance = ({balance,setBalance}) => {

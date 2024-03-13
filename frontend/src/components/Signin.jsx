@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 import { notify } from "../utils/notify";
-import { backendUrl } from '/'
 
+const backendUrl = process.env.backendUrl
 const url = backendUrl + '/user/signin'
 
 export const Signin = ()=>{

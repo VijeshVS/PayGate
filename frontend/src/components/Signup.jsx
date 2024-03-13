@@ -3,8 +3,8 @@ import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import 'react-toastify/dist/ReactToastify.css';
 import { notify } from '../utils/notify';
-import { backendUrl } from '/'
 
+const backendUrl = process.env.backendUrl
 const url = backendUrl + '/user/signup'
 
 export const Signup = ()=>{
