@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { Send } from "./Send";
 import { useDebounce } from "../hooks/useDebounce";
 
-const backendUrl = process.env.backendUrl
+const backendUrl = "https://ff42b547-2686-43b2-ba3b-7266ab8ba015-00-1jn5mzkhyvey.worf.replit.dev"
 const url = backendUrl + '/user/bulk'
 
 export const Userlist = ({setBalance})=>{

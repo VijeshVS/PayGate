@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 import { notify } from "../utils/notify";
 
-const backendUrl = process.env.backendUrl
+const backendUrl = "https://ff42b547-2686-43b2-ba3b-7266ab8ba015-00-1jn5mzkhyvey.worf.replit.dev"
 const url = backendUrl + '/user/signin'
 
 export const Signin = ()=>{
