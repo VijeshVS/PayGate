@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 import { notify } from "../utils/notify";
+import { backendUrl } from '/'
 
-const url = 'http://localhost:3000/api/v1/user/signin'
+const url = backendUrl + '/user/signin'
 
 export const Signin = ()=>{
     const navigate = useNavigate();

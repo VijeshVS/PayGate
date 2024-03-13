@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import { notify } from '../utils/notify';
 import { useNavigate } from 'react-router-dom';
+import { backendUrl } from '/'
 
-const url = 'http://localhost:3000/api/v1/account/balance';
+const url = backendUrl + '/account/balance'
 
 export const Balance = ({balance,setBalance}) => {
     const navigate = useNavigate();

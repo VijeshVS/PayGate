@@ -3,8 +3,9 @@ import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import 'react-toastify/dist/ReactToastify.css';
 import { notify } from '../utils/notify';
+import { backendUrl } from '/'
 
-const url = 'http://localhost:3000/api/v1/user/signup'
+const url = backendUrl + '/user/signup'
 
 export const Signup = ()=>{
 

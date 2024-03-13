@@ -3,7 +3,9 @@ import { useEffect, useState } from "react"
 import { Send } from "./Send";
 import { useDebounce } from "../hooks/useDebounce";
 
-const url = 'http://localhost:3000/api/v1/user/bulk'
+import { backendUrl } from '/'
+
+const url = backendUrl + '/user/bulk'
 
 export const Userlist = ({setBalance})=>{
     const [users,setUsers] = useState([]);
