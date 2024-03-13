@@ -4,7 +4,7 @@ import axios from 'axios'
 import 'react-toastify/dist/ReactToastify.css';
 import { notify } from '../utils/notify';
 
-const backendUrl = "https://ff42b547-2686-43b2-ba3b-7266ab8ba015-00-1jn5mzkhyvey.worf.replit.dev"
+const backendUrl = "https://ff42b547-2686-43b2-ba3b-7266ab8ba015-00-1jn5mzkhyvey.worf.replit.dev/api/v1"
 const url = backendUrl + '/user/signup'
 
 export const Signup = ()=>{
