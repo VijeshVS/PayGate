@@ -10,6 +10,7 @@ export const Userlist = ({setBalance})=>{
     const [users,setUsers] = useState([]);
     const [inputValue,setInputValue] = useState("")
     const filter = useDebounce(inputValue,0.5*1000);
+    const [load,setLoad] = useState(true)
 
     const getUsers = async ()=>{
         try{
@@ -19,6 +20,7 @@ export const Userlist = ({setBalance})=>{
                 }
             })
             console.log(response)
+            setLoad(false)
             setUsers(response.data.users)
         }
         catch(e){
@@ -31,6 +33,9 @@ export const Userlist = ({setBalance})=>{
         getUsers();
     },[filter])
     
+    if(load){
+        return <span className="loading loading-spinner loading-lg"></span>
+    }
 
     return <div>
         <h1 className="px-5 text-2xl font-bold">Users</h1>
