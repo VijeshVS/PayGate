@@ -34,7 +34,10 @@ export const Userlist = ({setBalance})=>{
     },[filter])
     
     if(load){
-        return <span className="loading loading-spinner loading-lg"></span>
+        return <div>
+            <span className="loading loading-spinner loading-lg"></span>
+            <h1>loading...</h1>
+            </div>
     }
 
     return <div>
