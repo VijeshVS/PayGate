@@ -35,7 +35,7 @@ export const Userlist = ({setBalance})=>{
     
     if(load){
         return <div>
-            <span className="loading loading-spinner loading-lg"></span>
+            <h1>Loading....</h1>
             </div>
     }
 
