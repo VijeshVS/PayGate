@@ -7,6 +7,9 @@ const PORT = 3000
 
 const app = express()
 
+console.log(process.env.MONGO_URL)
+console.log("MongoDB connected")
+
 app.use(cors())
 app.use(express.json()) 
 app.use('/api/v1',apiRouter)

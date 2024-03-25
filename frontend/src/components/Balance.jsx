@@ -3,7 +3,7 @@ import axios from 'axios';
 import { notify } from '../utils/notify';
 import { useNavigate } from 'react-router-dom';
 
-const backendUrl = "https://ff42b547-2686-43b2-ba3b-7266ab8ba015-00-1jn5mzkhyvey.worf.replit.dev/api/v1"
+const backendUrl = "http://localhost:3000/api/v1"
 const url = backendUrl + '/account/balance'
 
 export const Balance = ({balance,setBalance}) => {

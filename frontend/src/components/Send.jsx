@@ -4,7 +4,7 @@ import { notify } from '../utils/notify';
 import axios from 'axios';
 
 
-const backendUrl = "https://ff42b547-2686-43b2-ba3b-7266ab8ba015-00-1jn5mzkhyvey.worf.replit.dev/api/v1"
+const backendUrl = "http://localhost:3000/api/v1"
 const url = backendUrl + "/account/transfer"
 
 export const Send = ({user,setBalance})=>{

@@ -1,4 +1,4 @@
-dbURL = 'mongodb+srv://vijeshsshetty:PPhLA2DQd3GgOcNz@cluster0.khvm6df.mongodb.net/paygate'
+dbURL = process.env.MONGO_URL
 JWT_SECRET = 'jwt123'
 
 module.exports = {
