@@ -9,7 +9,7 @@ const url = backendUrl + '/user/bulk'
 export const Userlist = ({setBalance})=>{
     const [users,setUsers] = useState([]);
     const [inputValue,setInputValue] = useState("")
-    const filter = useDebounce(inputValue,0.5*1000);
+    const filter = useDebounce(inputValue,500);
     const [load,setLoad] = useState(true)
 
     const getUsers = async ()=>{
